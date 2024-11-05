@@ -7,7 +7,10 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-image: url('4c4c8d1487cce871a812f905747963ec_896_1152.jpg');
+            background-size: cover; /* 讓背景圖片覆蓋整個頁面 */
+            background-repeat: no-repeat; /* 不重複圖片 */
+            background-position: center; /* 圖片置中 */
             margin: 0;
             padding: 10px;
             display: flex;
@@ -16,15 +19,15 @@
             align-items: center;
             min-height: 100vh;
             text-align: center;
+            color: #fff; /* 確保文字在圖片上可見 */
         }
         .content, .options, .details {
             max-width: 100%;
             width: 90%;
             box-sizing: border-box;
             padding: 20px;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.8); /* 半透明背景以提高可讀性 */
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             margin: 0 auto 20px;
             display: none;
         }
@@ -53,11 +56,6 @@
         }
         button:hover {
             background-color: #0056b3;
-        }
-        .footer-image {
-            width: 100%;
-            max-width: 600px;
-            margin-top: 20px;
         }
         @media (min-width: 768px) {
             .content, .options, .details {
@@ -88,10 +86,6 @@
         <p>這個方案包括完整的自傳撰寫服務，涵蓋您人生中的重要經歷和故事。<br>價格：NT$ 3,000</p>
         <button onclick="goBack()">返回選擇</button>
     </div>
-
-    <!-- 底部圖片 -->
-    <img src="4c4c8d1487cce871a812f905747963ec_896_1152.jpg" alt="底部圖片" class="footer-image">
-
 
     <script>
         function showOptions() {
