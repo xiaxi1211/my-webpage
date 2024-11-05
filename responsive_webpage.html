@@ -10,29 +10,33 @@ html_content = """
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             text-align: center;
+            overflow-x: hidden;
         }
         .content {
-            max-width: 90%;
-            width: 100%;
+            max-width: 100%;
+            width: 90%;
             box-sizing: border-box;
             padding: 20px;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 0 auto;
         }
         h1 {
             color: #333;
-            font-size: 1.8em;
+            font-size: 2em;
+            word-wrap: break-word;
         }
         p {
-            font-size: 1em;
+            font-size: 1.2em;
             color: #666;
+            word-wrap: break-word;
         }
         button {
             padding: 10px 20px;
@@ -42,6 +46,7 @@ html_content = """
             cursor: pointer;
             font-size: 1em;
             border-radius: 5px;
+            margin-top: 20px;
         }
         button:hover {
             background-color: #0056b3;
