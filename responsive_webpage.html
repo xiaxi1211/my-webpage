@@ -11,12 +11,13 @@
             margin: 0;
             padding: 10px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             text-align: center;
         }
-        .content, .options {
+        .content, .options, .details {
             max-width: 100%;
             width: 90%;
             box-sizing: border-box;
@@ -24,10 +25,10 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin: 0 auto;
+            margin: 0 auto 20px;
             display: none;
         }
-        .content.active, .options.active {
+        .content.active, .options.active, .details.active {
             display: block;
         }
         h1 {
@@ -53,8 +54,13 @@
         button:hover {
             background-color: #0056b3;
         }
+        .footer-image {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
         @media (min-width: 768px) {
-            .content, .options {
+            .content, .options, .details {
                 max-width: 600px;
             }
             h1 {
@@ -74,13 +80,33 @@
     </div>
     <div class="options" id="optionsContent">
         <h1>選擇您的故事方案</h1>
-        <button onclick="alert('完整故事選擇')">完整故事</button>
+        <button onclick="showDetails('完整故事')">完整故事</button>
         <button onclick="alert('段落故事選擇')">段落故事</button>
     </div>
+    <div class="details" id="detailsContent">
+        <h1>完整故事方案</h1>
+        <p>這個方案包括完整的自傳撰寫服務，涵蓋您人生中的重要經歷和故事。<br>價格：NT$ 3,000</p>
+        <button onclick="goBack()">返回選擇</button>
+    </div>
+
+    <!-- 底部圖片 -->
+    <img src="your-image-url.jpg" alt="底部圖片" class="footer-image">
 
     <script>
         function showOptions() {
             document.getElementById('initialContent').classList.remove('active');
+            document.getElementById('optionsContent').classList.add('active');
+        }
+
+        function showDetails(plan) {
+            if (plan === '完整故事') {
+                document.getElementById('optionsContent').classList.remove('active');
+                document.getElementById('detailsContent').classList.add('active');
+            }
+        }
+
+        function goBack() {
+            document.getElementById('detailsContent').classList.remove('active');
             document.getElementById('optionsContent').classList.add('active');
         }
     </script>
