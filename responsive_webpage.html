@@ -16,7 +16,7 @@
             min-height: 100vh;
             text-align: center;
         }
-        .content {
+        .content, .options {
             max-width: 100%;
             width: 90%;
             box-sizing: border-box;
@@ -25,6 +25,10 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             margin: 0 auto;
+            display: none;
+        }
+        .content.active, .options.active {
+            display: block;
         }
         h1 {
             color: #333;
@@ -50,7 +54,7 @@
             background-color: #0056b3;
         }
         @media (min-width: 768px) {
-            .content {
+            .content, .options {
                 max-width: 600px;
             }
             h1 {
@@ -63,10 +67,22 @@
     </style>
 </head>
 <body>
-    <div class="content">
+    <div class="content active" id="initialContent">
         <h1>歡迎來到自傳回憶錄系統</h1>
         <p>為您打造量身專屬的自傳</p>
-        <button onclick="alert('你按下了按鈕！')">開始打造</button>
+        <button onclick="showOptions()">開始打造</button>
     </div>
+    <div class="options" id="optionsContent">
+        <h1>選擇您的故事方案</h1>
+        <button onclick="alert('完整故事選擇')">完整故事</button>
+        <button onclick="alert('段落故事選擇')">段落故事</button>
+    </div>
+
+    <script>
+        function showOptions() {
+            document.getElementById('initialContent').classList.remove('active');
+            document.getElementById('optionsContent').classList.add('active');
+        }
+    </script>
 </body>
 </html>
