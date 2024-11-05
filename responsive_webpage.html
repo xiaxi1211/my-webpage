@@ -1,4 +1,3 @@
-html_content = """
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -19,7 +18,7 @@ html_content = """
         }
         .content {
             max-width: 100%;
-            width: 100%;
+            width: 90%;
             box-sizing: border-box;
             padding: 20px;
             background-color: #fff;
@@ -71,10 +70,3 @@ html_content = """
     </div>
 </body>
 </html>
-"""
-
-with open("responsive_webpage.html", "w", encoding="utf-8") as file:
-    file.write(html_content)
-import webbrowser
-import os
-webbrowser.open(f"file://{os.path.abspath('responsive_webpage.html')}")
