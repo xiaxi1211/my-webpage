@@ -8,9 +8,9 @@
         body {
             font-family: Arial, sans-serif;
             background-image: url('4c4c8d1487cce871a812f905747963ec_896_1152.jpg');
-            background-size: cover; /* 讓背景圖片覆蓋整個頁面 */
-            background-repeat: no-repeat; /* 不重複圖片 */
-            background-position: center; /* 圖片置中 */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
             margin: 0;
             padding: 10px;
             display: flex;
@@ -19,16 +19,16 @@
             align-items: center;
             min-height: 100vh;
             text-align: center;
-            color: #fff; /* 確保文字在圖片上可見 */
         }
         .content, .options, .details {
             max-width: 100%;
             width: 90%;
             box-sizing: border-box;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8); /* 半透明背景以提高可讀性 */
+            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 8px;
             margin: 0 auto 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: none;
         }
         .content.active, .options.active, .details.active {
@@ -76,14 +76,22 @@
         <p>為您打造量身專屬的自傳</p>
         <button onclick="showOptions()">開始打造</button>
     </div>
+    
     <div class="options" id="optionsContent">
         <h1>選擇您的故事方案</h1>
         <button onclick="showDetails('完整故事')">完整故事</button>
-        <button onclick="alert('段落故事選擇')">段落故事</button>
+        <button onclick="showDetails('段落故事')">段落故事</button>
     </div>
-    <div class="details" id="detailsContent">
+    
+    <div class="details" id="fullStoryDetails">
         <h1>完整故事方案</h1>
         <p>這個方案包括完整的自傳撰寫服務，涵蓋您人生中的重要經歷和故事。<br>價格：NT$ 3,000</p>
+        <button onclick="goBack()">返回選擇</button>
+    </div>
+    
+    <div class="details" id="segmentStoryDetails">
+        <h1>段落故事方案</h1>
+        <p>這個方案提供分段的自傳內容，可靈活選擇和組合不同時期的故事。<br>價格：NT$ 1,500</p>
         <button onclick="goBack()">返回選擇</button>
     </div>
 
@@ -94,14 +102,18 @@
         }
 
         function showDetails(plan) {
+            document.getElementById('optionsContent').classList.remove('active');
+            
             if (plan === '完整故事') {
-                document.getElementById('optionsContent').classList.remove('active');
-                document.getElementById('detailsContent').classList.add('active');
+                document.getElementById('fullStoryDetails').classList.add('active');
+            } else if (plan === '段落故事') {
+                document.getElementById('segmentStoryDetails').classList.add('active');
             }
         }
 
         function goBack() {
-            document.getElementById('detailsContent').classList.remove('active');
+            document.getElementById('fullStoryDetails').classList.remove('active');
+            document.getElementById('segmentStoryDetails').classList.remove('active');
             document.getElementById('optionsContent').classList.add('active');
         }
     </script>
