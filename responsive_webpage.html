@@ -20,7 +20,7 @@
             min-height: 100vh;
             text-align: center;
         }
-        .content, .options, .details, .question {
+        .content, .options, .details, .question, .personal-info {
             max-width: 100%;
             width: 90%;
             box-sizing: border-box;
@@ -31,7 +31,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: none;
         }
-        .content.active, .options.active, .details.active, .question.active {
+        .content.active, .options.active, .details.active, .question.active, .personal-info.active {
             display: block;
         }
         h1 {
@@ -66,7 +66,7 @@
             font-size: 2em;
             padding: 15px;
             background-color: #ff5722;
-            border-radius: 50%; /* 將按鈕變為圓形 */
+            border-radius: 50%;
             color: white;
             cursor: pointer;
             display: inline-flex;
@@ -76,8 +76,16 @@
         .mic-button:active {
             background-color: #d84315;
         }
+        input[type="text"], input[type="email"], input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
         @media (min-width: 768px) {
-            .content, .options, .details, .question {
+            .content, .options, .details, .question, .personal-info {
                 max-width: 600px;
             }
             h1 {
@@ -104,7 +112,7 @@
     
     <div class="details" id="fullStoryDetails">
         <h1>完整故事方案</h1>
-        <p>這個方案包括完整自傳撰寫服務，涵蓋您人生重要經歷和故事。<br>價格：NT$ 3,000</p>
+        <p>這個方案包括完整的自傳撰寫服務，涵蓋您人生中的重要經歷和故事。<br>價格：NT$ 3,000</p>
         <div class="button-group">
             <button onclick="goBack()">返回選擇</button>
             <button onclick="selectPlan()">選擇此方案</button>
@@ -113,7 +121,7 @@
     
     <div class="details" id="segmentStoryDetails">
         <h1>段落故事方案</h1>
-        <p>這個方案提供分段自傳內容，可靈活選擇和組合不同時期故事。<br>價格：NT$ 1,500</p>
+        <p>這個方案提供分段的自傳內容，可靈活選擇和組合不同時期的故事。<br>價格：NT$ 1,500</p>
         <div class="button-group">
             <button onclick="goBack()">返回選擇</button>
             <button onclick="selectPlan()">選擇此方案</button>
@@ -131,6 +139,17 @@
         </div>
     </div>
 
+    <!-- 個人資料填寫區塊 -->
+    <div class="personal-info" id="personalInfoSection">
+        <h1>填寫個人資料</h1>
+        <form id="personalInfoForm">
+            <input type="text" id="name" name="name" placeholder="姓名" required>
+            <input type="email" id="email" name="email" placeholder="電子郵件" required>
+            <input type="tel" id="phone" name="phone" placeholder="電話號碼" required>
+            <button type="button" onclick="submitPersonalInfo()">提交</button>
+        </form>
+    </div>
+
     <script>
         const questions = [
             "您有什麼特別的童年回憶嗎？",
@@ -138,6 +157,7 @@
             "您人生中遇到的最大挑戰是什麼？"
         ];
         let currentQuestionIndex = 0;
+        let recordingTimeout;
 
         function showOptions() {
             document.getElementById('initialContent').classList.remove('active');
@@ -171,13 +191,16 @@
             document.getElementById("questionText").innerText = questions[currentQuestionIndex];
         }
 
-        // 模擬錄音功能
         function startRecording() {
             console.log("開始錄音...");
             document.getElementById("micButton").style.backgroundColor = "#d84315";
+            recordingTimeout = setTimeout(() => {
+                console.log("錄音中...");
+            }, 1000);
         }
 
         function stopRecording() {
+            clearTimeout(recordingTimeout);
             console.log("錄音結束...");
             document.getElementById("micButton").style.backgroundColor = "#ff5722";
             document.getElementById("recordingControls").style.display = "flex";
@@ -199,9 +222,17 @@
             if (currentQuestionIndex < questions.length) {
                 loadQuestion();
             } else {
-                alert("所有問題已完成！");
                 document.getElementById("questionSection").classList.remove("active");
+                document.getElementById("personalInfoSection").classList.add("active");
             }
+        }
+
+        function submitPersonalInfo() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            alert(`個人資料提交成功！\n姓名: ${name}\n電子郵件: ${email}\n電話號碼: ${phone}`);
+            document.getElementById("personalInfoSection").classList.remove("active");
         }
     </script>
 </body>
