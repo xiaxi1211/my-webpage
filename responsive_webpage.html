@@ -67,9 +67,9 @@
         }
         .mic-button {
             font-size: 1.5em;
-            padding: 15px 25px;
+            padding: 15px;
             background-color: #ff5722;
-            border-radius: 50px;
+            border-radius: 50%;
             color: white;
             cursor: pointer;
             display: inline-flex;
@@ -80,9 +80,9 @@
         .mic-button.recording {
             background-color: #d84315;
             font-size: 1em;
-            padding: 15px 25px;
-            border-radius: 50px;
-            width: auto;
+        }
+        .mic-icon {
+            margin-right: 5px;
         }
         input[type="text"], input[type="email"], input[type="tel"], select {
             width: 100%;
@@ -140,7 +140,9 @@
     <div class="question" id="questionSection">
         <h1>請回答以下問題</h1>
         <p id="questionText">您有什麼特別的童年回憶嗎？</p>
-        <div class="mic-button" id="micButton" onclick="startRecording()">按下開始錄音</div>
+        <div class="mic-button" id="micButton" onclick="startRecording()">
+            <span class="mic-icon">🎤</span>按下開始錄音
+        </div>
         <div class="recording-buttons" id="recordingControls" style="display: none;">
             <button onclick="resetRecording()">重新</button>
             <button onclick="sendRecording()">發送</button>
@@ -210,17 +212,32 @@
 
         function startRecording() {
             micButton.classList.add("recording");
-            micButton.innerText = "正在錄音...按完成以結束"; // 顯示錄音中文字
+            micButton.innerHTML = '<span class="mic-icon">🎤</span>正在錄音...按完成以結束'; // 顯示錄音中文字
             console.log("開始錄音...");
             
             // 顯示完成按鈕，隱藏重新與發送按鈕
+            const finishButton = document.createElement("button");
+            finishButton.innerText = "完成";
+            finishButton.onclick = completeRecording;
+            document.getElementById("recordingControls").innerHTML = ""; // 清空其他按鈕
+            document.getElementById("recordingControls").appendChild(finishButton);
             document.getElementById("recordingControls").style.display = "flex";
+        }
+
+        function completeRecording() {
+            micButton.innerHTML = '<span class="mic-icon">🎤</span>按下開始錄音'; // 恢復按鈕原本文字
+            micButton.classList.remove("recording");
+
+            // 顯示重新和發送按鈕
+            document.getElementById("recordingControls").innerHTML = `
+                <button onclick="resetRecording()">重新</button>
+                <button onclick="sendRecording()">發送</button>
+            `;
+            console.log("錄音完成...");
         }
 
         function resetRecording() {
             console.log("重新錄音...");
-            micButton.innerText = "按下開始錄音"; // 恢復按鈕原本文字
-            micButton.classList.remove("recording");
             document.getElementById("recordingControls").style.display = "none";
         }
 
