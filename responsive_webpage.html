@@ -75,14 +75,14 @@
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            transition: background-color 0.2s, width 0.2s;
+            transition: background-color 0.2s;
         }
         .mic-button.recording {
             background-color: #d84315;
-            width: auto;
+            font-size: 1em;
             padding: 15px 25px;
             border-radius: 50px;
-            font-size: 1em;
+            width: auto;
         }
         input[type="text"], input[type="email"], input[type="tel"], select {
             width: 100%;
@@ -140,7 +140,7 @@
     <div class="question" id="questionSection">
         <h1>請回答以下問題</h1>
         <p id="questionText">您有什麼特別的童年回憶嗎？</p>
-        <div class="mic-button" id="micButton">按住開始錄音</div>
+        <div class="mic-button" id="micButton" onclick="startRecording()">按下開始錄音</div>
         <div class="recording-buttons" id="recordingControls" style="display: none;">
             <button onclick="resetRecording()">重新</button>
             <button onclick="sendRecording()">發送</button>
@@ -174,7 +174,6 @@
             "您人生中遇到的最大挑戰是什麼？"
         ];
         let currentQuestionIndex = 0;
-        let recordingTimeout;
         const micButton = document.getElementById("micButton");
 
         function showOptions() {
@@ -209,34 +208,24 @@
             document.getElementById("questionText").innerText = questions[currentQuestionIndex];
         }
 
-        function startRecording(event) {
-            event.preventDefault();
-            event.stopPropagation();
+        function startRecording() {
             micButton.classList.add("recording");
-            micButton.innerText = "錄音中..."; // 顯示錄音中文字
+            micButton.innerText = "正在錄音...按完成以結束"; // 顯示錄音中文字
             console.log("開始錄音...");
-            recordingTimeout = setTimeout(() => {
-                console.log("錄音中...");
-            }, 1000);
-        }
-
-        function stopRecording(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            clearTimeout(recordingTimeout);
-            micButton.classList.remove("recording");
-            micButton.innerText = "按住開始錄音"; // 恢復按鈕原本文字
-            document.getElementById("recordingControls").style.display = "flex"; // 顯示重新和發送按鈕
-            console.log("錄音結束...");
+            
+            // 顯示完成按鈕，隱藏重新與發送按鈕
+            document.getElementById("recordingControls").style.display = "flex";
         }
 
         function resetRecording() {
             console.log("重新錄音...");
+            micButton.innerText = "按下開始錄音"; // 恢復按鈕原本文字
+            micButton.classList.remove("recording");
             document.getElementById("recordingControls").style.display = "none";
         }
 
         function sendRecording() {
-            document.getElementById("recordingControls").style.display = "none";
+            resetRecording(); // 重置錄音按鈕狀態
             nextQuestion(); // 跳到下一題
         }
 
@@ -258,11 +247,6 @@
             alert(`個人資料提交成功！\n姓名: ${name}\n電子郵件: ${email}\n電話號碼: ${phone}\n自傳風格: ${style}`);
             document.getElementById("personalInfoSection").classList.remove("active");
         }
-
-        micButton.addEventListener("mousedown", startRecording);
-        micButton.addEventListener("mouseup", stopRecording);
-        micButton.addEventListener("touchstart", startRecording);
-        micButton.addEventListener("touchend", stopRecording);
     </script>
 </body>
 </html>
