@@ -137,6 +137,10 @@
         <h1>請回答以下問題</h1>
         <p id="questionText">您有什麼特別的童年回憶嗎？</p>
         <div class="mic-button" id="micButton">🎤</div>
+        <div class="recording-buttons" id="recordingControls" style="display: none;">
+            <button onclick="resetRecording()">重新</button>
+            <button onclick="sendRecording()">發送</button>
+        </div>
     </div>
 
     <!-- 個人資料填寫區塊 -->
@@ -216,8 +220,18 @@
             event.stopPropagation();
             clearTimeout(recordingTimeout);
             micButton.classList.remove("recording");
+            document.getElementById("recordingControls").style.display = "flex"; // 顯示重新和發送按鈕
             console.log("錄音結束...");
-            nextQuestion(); // 自動跳到下一題
+        }
+
+        function resetRecording() {
+            console.log("重新錄音...");
+            document.getElementById("recordingControls").style.display = "none";
+        }
+
+        function sendRecording() {
+            document.getElementById("recordingControls").style.display = "none";
+            nextQuestion(); // 跳到下一題
         }
 
         function nextQuestion() {
