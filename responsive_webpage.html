@@ -20,7 +20,7 @@
             min-height: 100vh;
             text-align: center;
         }
-        .content, .options, .details {
+        .content, .options, .details, .question {
             max-width: 100%;
             width: 90%;
             box-sizing: border-box;
@@ -31,7 +31,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: none;
         }
-        .content.active, .options.active, .details.active {
+        .content.active, .options.active, .details.active, .question.active {
             display: block;
         }
         h1 {
@@ -44,7 +44,7 @@
             color: #666;
             word-wrap: break-word;
         }
-        .button-group {
+        .button-group, .recording-buttons {
             display: flex;
             gap: 10px;
             justify-content: center;
@@ -62,8 +62,19 @@
         button:hover {
             background-color: #0056b3;
         }
+        .mic-button {
+            font-size: 1.5em;
+            padding: 10px;
+            background-color: #ff5722;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+        }
+        .mic-button:active {
+            background-color: #d84315;
+        }
         @media (min-width: 768px) {
-            .content, .options, .details {
+            .content, .options, .details, .question {
                 max-width: 600px;
             }
             h1 {
@@ -90,19 +101,30 @@
     
     <div class="details" id="fullStoryDetails">
         <h1>完整故事方案</h1>
-        <p>這個方案包括完整自傳撰寫服務，涵蓋您人生重要經歷和故事。<br>價格：NT$ 3,000</p>
+        <p>這個方案包括完整的自傳撰寫服務，涵蓋您人生中的重要經歷和故事。<br>價格：NT$ 3,000</p>
         <div class="button-group">
             <button onclick="goBack()">返回選擇</button>
-            <button onclick="selectPlan('完整故事')">選擇此方案</button>
+            <button onclick="selectPlan()">選擇此方案</button>
         </div>
     </div>
     
     <div class="details" id="segmentStoryDetails">
         <h1>段落故事方案</h1>
-        <p>這個方案提供分段自傳內容，可靈活選擇和組合不同時期故事。<br>價格：NT$ 1,500</p>
+        <p>這個方案提供分段的自傳內容，可靈活選擇和組合不同時期的故事。<br>價格：NT$ 1,500</p>
         <div class="button-group">
             <button onclick="goBack()">返回選擇</button>
-            <button onclick="selectPlan('段落故事')">選擇此方案</button>
+            <button onclick="selectPlan()">選擇此方案</button>
+        </div>
+    </div>
+
+    <!-- 問題區塊 -->
+    <div class="question" id="questionSection">
+        <h1>請回答以下問題</h1>
+        <p>您有什麼特別的童年回憶嗎？</p>
+        <div class="mic-button" id="micButton" onmousedown="startRecording()" onmouseup="stopRecording()">🎤</div>
+        <div class="recording-buttons" id="recordingControls" style="display: none;">
+            <button onclick="resetRecording()">重新</button>
+            <button onclick="sendRecording()">發送</button>
         </div>
     </div>
 
@@ -128,8 +150,32 @@
             document.getElementById('optionsContent').classList.add('active');
         }
 
-        function selectPlan(plan) {
-            alert(`您已選擇了${plan}方案！`);
+        function selectPlan() {
+            document.getElementById('fullStoryDetails').classList.remove('active');
+            document.getElementById('segmentStoryDetails').classList.remove('active');
+            document.getElementById('questionSection').classList.add('active');
+        }
+
+        // 模擬錄音功能
+        function startRecording() {
+            console.log("開始錄音...");
+            document.getElementById("micButton").style.backgroundColor = "#d84315";
+        }
+
+        function stopRecording() {
+            console.log("錄音結束...");
+            document.getElementById("micButton").style.backgroundColor = "#ff5722";
+            document.getElementById("recordingControls").style.display = "flex";
+        }
+
+        function resetRecording() {
+            console.log("重新錄音...");
+            document.getElementById("recordingControls").style.display = "none";
+        }
+
+        function sendRecording() {
+            alert("您的錄音已發送！");
+            document.getElementById("recordingControls").style.display = "none";
         }
     </script>
 </body>
