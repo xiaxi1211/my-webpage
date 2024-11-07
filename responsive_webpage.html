@@ -19,7 +19,7 @@
             align-items: center;
             min-height: 100vh;
             text-align: center;
-            -webkit-user-select: none; /* 禁用選取 */
+            -webkit-user-select: none;
             -ms-user-select: none;
             user-select: none;
         }
@@ -76,14 +76,11 @@
             justify-content: center;
             align-items: center;
             transition: background-color 0.2s;
-            -webkit-user-select: none; /* 禁用選取 */
-            -ms-user-select: none;
-            user-select: none;
         }
         .mic-button.recording {
             background-color: #d84315;
         }
-        input[type="text"], input[type="email"], input[type="tel"] {
+        input[type="text"], input[type="email"], input[type="tel"], select {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -146,6 +143,26 @@
         </div>
     </div>
 
+    <!-- 個人資料填寫區塊 -->
+    <div class="personal-info" id="personalInfoSection">
+        <h1>填寫個人資料</h1>
+        <form id="personalInfoForm">
+            <input type="text" id="name" name="name" placeholder="姓名" required>
+            <input type="email" id="email" name="email" placeholder="電子郵件" required>
+            <input type="tel" id="phone" name="phone" placeholder="電話號碼" required>
+            <label for="style">選擇自傳風格：</label>
+            <select id="style" name="style" required>
+                <option value="">請選擇風格</option>
+                <option value="經典">經典風格</option>
+                <option value="溫馨">溫馨風格</option>
+                <option value="幽默">幽默風格</option>
+                <option value="勵志">勵志風格</option>
+                <option value="文學">文學風格</option>
+            </select>
+            <button type="button" onclick="submitPersonalInfo()">提交</button>
+        </form>
+    </div>
+
     <script>
         const questions = [
             "您有什麼特別的童年回憶嗎？",
@@ -195,7 +212,7 @@
             console.log("開始錄音...");
             recordingTimeout = setTimeout(() => {
                 console.log("錄音中...");
-            }, 1000); // 模擬錄音過程
+            }, 1000);
         }
 
         function stopRecording(event) {
@@ -226,6 +243,15 @@
                 document.getElementById("questionSection").classList.remove("active");
                 document.getElementById("personalInfoSection").classList.add("active");
             }
+        }
+
+        function submitPersonalInfo() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const style = document.getElementById("style").value;
+            alert(`個人資料提交成功！\n姓名: ${name}\n電子郵件: ${email}\n電話號碼: ${phone}\n自傳風格: ${style}`);
+            document.getElementById("personalInfoSection").classList.remove("active");
         }
 
         micButton.addEventListener("mousedown", startRecording);
