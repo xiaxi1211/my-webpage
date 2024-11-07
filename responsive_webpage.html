@@ -19,6 +19,9 @@
             align-items: center;
             min-height: 100vh;
             text-align: center;
+            -webkit-user-select: none; /* 禁用選取 */
+            -ms-user-select: none;
+            user-select: none;
         }
         .content, .options, .details, .question, .personal-info {
             max-width: 100%;
@@ -73,6 +76,9 @@
             justify-content: center;
             align-items: center;
             transition: background-color 0.2s;
+            -webkit-user-select: none; /* 禁用選取 */
+            -ms-user-select: none;
+            user-select: none;
         }
         .mic-button.recording {
             background-color: #d84315;
@@ -182,8 +188,9 @@
             document.getElementById("questionText").innerText = questions[currentQuestionIndex];
         }
 
-        // 開始錄音（長按）
-        function startRecording() {
+        function startRecording(event) {
+            event.preventDefault();
+            event.stopPropagation();
             micButton.classList.add("recording");
             console.log("開始錄音...");
             recordingTimeout = setTimeout(() => {
@@ -191,8 +198,9 @@
             }, 1000); // 模擬錄音過程
         }
 
-        // 停止錄音（鬆開按鈕）
-        function stopRecording() {
+        function stopRecording(event) {
+            event.preventDefault();
+            event.stopPropagation();
             clearTimeout(recordingTimeout);
             micButton.classList.remove("recording");
             console.log("錄音結束...");
@@ -222,8 +230,8 @@
 
         micButton.addEventListener("mousedown", startRecording);
         micButton.addEventListener("mouseup", stopRecording);
-        micButton.addEventListener("touchstart", startRecording); // 支援手機觸控
-        micButton.addEventListener("touchend", stopRecording); // 支援手機觸控
+        micButton.addEventListener("touchstart", startRecording);
+        micButton.addEventListener("touchend", stopRecording);
     </script>
 </body>
 </html>
