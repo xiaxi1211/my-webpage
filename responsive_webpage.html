@@ -225,8 +225,9 @@
         }
 
         function completeRecording() {
-            micButton.innerHTML = '<span class="mic-icon">🎤</span>按下開始錄音'; // 恢復按鈕原本文字
+            micButton.innerHTML = '<span class="mic-icon">🎤</span>已完成錄音'; // 更改按鈕文字為已完成錄音
             micButton.classList.remove("recording");
+            micButton.onclick = null; // 禁用按鈕點擊事件
 
             // 顯示重新和發送按鈕
             document.getElementById("recordingControls").innerHTML = `
@@ -237,8 +238,10 @@
         }
 
         function resetRecording() {
-            console.log("重新錄音...");
+            micButton.innerHTML = '<span class="mic-icon">🎤</span>按下開始錄音'; // 恢復按鈕原本文字
+            micButton.onclick = startRecording; // 重新啟用錄音按鈕點擊事件
             document.getElementById("recordingControls").style.display = "none";
+            console.log("重新錄音...");
         }
 
         function sendRecording() {
