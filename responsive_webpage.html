@@ -63,12 +63,15 @@
             background-color: #0056b3;
         }
         .mic-button {
-            font-size: 1.5em;
-            padding: 10px;
+            font-size: 2em;
+            padding: 15px;
             background-color: #ff5722;
-            border-radius: 50%;
+            border-radius: 50%; /* 將按鈕變為圓形 */
             color: white;
             cursor: pointer;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
         }
         .mic-button:active {
             background-color: #d84315;
@@ -120,7 +123,7 @@
     <!-- 問題區塊 -->
     <div class="question" id="questionSection">
         <h1>請回答以下問題</h1>
-        <p>您有什麼特別的童年回憶嗎？</p>
+        <p id="questionText">您有什麼特別的童年回憶嗎？</p>
         <div class="mic-button" id="micButton" onmousedown="startRecording()" onmouseup="stopRecording()">🎤</div>
         <div class="recording-buttons" id="recordingControls" style="display: none;">
             <button onclick="resetRecording()">重新</button>
@@ -129,6 +132,13 @@
     </div>
 
     <script>
+        const questions = [
+            "您有什麼特別的童年回憶嗎？",
+            "您最喜歡的學校記憶是什麼？",
+            "您人生中遇到的最大挑戰是什麼？"
+        ];
+        let currentQuestionIndex = 0;
+
         function showOptions() {
             document.getElementById('initialContent').classList.remove('active');
             document.getElementById('optionsContent').classList.add('active');
@@ -154,6 +164,11 @@
             document.getElementById('fullStoryDetails').classList.remove('active');
             document.getElementById('segmentStoryDetails').classList.remove('active');
             document.getElementById('questionSection').classList.add('active');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            document.getElementById("questionText").innerText = questions[currentQuestionIndex];
         }
 
         // 模擬錄音功能
@@ -176,6 +191,17 @@
         function sendRecording() {
             alert("您的錄音已發送！");
             document.getElementById("recordingControls").style.display = "none";
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                alert("所有問題已完成！");
+                document.getElementById("questionSection").classList.remove("active");
+            }
         }
     </script>
 </body>
