@@ -44,6 +44,12 @@
             color: #666;
             word-wrap: break-word;
         }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
         button {
             padding: 10px 20px;
             background-color: #007bff;
@@ -52,7 +58,6 @@
             cursor: pointer;
             font-size: 1em;
             border-radius: 5px;
-            margin-top: 20px;
         }
         button:hover {
             background-color: #0056b3;
@@ -85,14 +90,20 @@
     
     <div class="details" id="fullStoryDetails">
         <h1>完整故事方案</h1>
-        <p>這個方案包括完整自傳撰寫服務，涵蓋您人生重要經歷和故事。<br>價格：NT$ 3,000</p>
-        <button onclick="goBack()">返回選擇</button>
+        <p>這個方案包括完整的自傳撰寫服務，涵蓋您人生中的重要經歷和故事。<br>價格：NT$ 3,000</p>
+        <div class="button-group">
+            <button onclick="goBack()">返回選擇</button>
+            <button onclick="selectPlan('完整故事')">選擇此方案</button>
+        </div>
     </div>
     
     <div class="details" id="segmentStoryDetails">
         <h1>段落故事方案</h1>
-        <p>這個方案提供分段的自傳內容，可靈活選擇和組合不同時期故事。<br>價格：NT$ 1,500</p>
-        <button onclick="goBack()">返回選擇</button>
+        <p>這個方案提供分段的自傳內容，可靈活選擇和組合不同時期的故事。<br>價格：NT$ 1,500</p>
+        <div class="button-group">
+            <button onclick="goBack()">返回選擇</button>
+            <button onclick="selectPlan('段落故事')">選擇此方案</button>
+        </div>
     </div>
 
     <script>
@@ -115,6 +126,10 @@
             document.getElementById('fullStoryDetails').classList.remove('active');
             document.getElementById('segmentStoryDetails').classList.remove('active');
             document.getElementById('optionsContent').classList.add('active');
+        }
+
+        function selectPlan(plan) {
+            alert(`您已選擇了${plan}方案！`);
         }
     </script>
 </body>
