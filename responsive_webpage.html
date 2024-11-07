@@ -66,19 +66,23 @@
             background-color: #0056b3;
         }
         .mic-button {
-            font-size: 2em;
-            padding: 15px;
+            font-size: 1.5em;
+            padding: 15px 25px;
             background-color: #ff5722;
-            border-radius: 50%;
+            border-radius: 50px;
             color: white;
             cursor: pointer;
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s, width 0.2s;
         }
         .mic-button.recording {
             background-color: #d84315;
+            width: auto;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1em;
         }
         input[type="text"], input[type="email"], input[type="tel"], select {
             width: 100%;
@@ -116,7 +120,7 @@
     
     <div class="details" id="fullStoryDetails">
         <h1>完整故事方案</h1>
-        <p>這個方案包括完整自傳撰寫服務，涵蓋您人生重要經歷和故事。<br>價格：NT$ 3,000</p>
+        <p>這個方案包括完整的自傳撰寫服務，涵蓋您人生中的重要經歷和故事。<br>價格：NT$ 3,000</p>
         <div class="button-group">
             <button onclick="goBack()">返回選擇</button>
             <button onclick="selectPlan()">選擇此方案</button>
@@ -125,7 +129,7 @@
     
     <div class="details" id="segmentStoryDetails">
         <h1>段落故事方案</h1>
-        <p>這個方案提供分段自傳內容，可靈活選擇和組合不同時期故事。<br>價格：NT$ 1,500</p>
+        <p>這個方案提供分段的自傳內容，可靈活選擇和組合不同時期的故事。<br>價格：NT$ 1,500</p>
         <div class="button-group">
             <button onclick="goBack()">返回選擇</button>
             <button onclick="selectPlan()">選擇此方案</button>
@@ -136,7 +140,7 @@
     <div class="question" id="questionSection">
         <h1>請回答以下問題</h1>
         <p id="questionText">您有什麼特別的童年回憶嗎？</p>
-        <div class="mic-button" id="micButton">🎤</div>
+        <div class="mic-button" id="micButton">按住開始錄音</div>
         <div class="recording-buttons" id="recordingControls" style="display: none;">
             <button onclick="resetRecording()">重新</button>
             <button onclick="sendRecording()">發送</button>
@@ -157,7 +161,7 @@
                 <option value="溫馨">溫馨風格</option>
                 <option value="幽默">幽默風格</option>
                 <option value="勵志">勵志風格</option>
-                <option value="瓊瑤">瓊瑤風格</option>
+                <option value="文學">文學風格</option>
             </select>
             <button type="button" onclick="submitPersonalInfo()">提交</button>
         </form>
@@ -209,6 +213,7 @@
             event.preventDefault();
             event.stopPropagation();
             micButton.classList.add("recording");
+            micButton.innerText = "錄音中..."; // 顯示錄音中文字
             console.log("開始錄音...");
             recordingTimeout = setTimeout(() => {
                 console.log("錄音中...");
@@ -220,6 +225,7 @@
             event.stopPropagation();
             clearTimeout(recordingTimeout);
             micButton.classList.remove("recording");
+            micButton.innerText = "按住開始錄音"; // 恢復按鈕原本文字
             document.getElementById("recordingControls").style.display = "flex"; // 顯示重新和發送按鈕
             console.log("錄音結束...");
         }
