@@ -51,7 +51,7 @@
         button:hover {
             background-color: #0056b3;
         }
-        input[type="text"], input[type="email"], input[type="tel"] {
+        input[type="text"], input[type="email"], input[type="tel"], input[type="password"] {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -102,7 +102,16 @@
         <input type="text" id="registerName" placeholder="姓名" required>
         <input type="email" id="registerEmail" placeholder="電子郵件" required>
         <input type="tel" id="registerPhone" placeholder="電話號碼" required>
+        <input type="password" id="registerPassword" placeholder="密碼" required>
         <button onclick="submitRegister()">提交</button>
+    </div>
+
+    <!-- 登入頁面 -->
+    <div class="wrapper hidden" id="loginContent">
+        <h1>會員登入</h1>
+        <input type="email" id="loginEmail" placeholder="電子郵件" required>
+        <input type="password" id="loginPassword" placeholder="密碼" required>
+        <button onclick="submitLogin()">登入</button>
     </div>
 
     <script>
@@ -142,7 +151,8 @@
             const name = document.getElementById("registerName").value;
             const email = document.getElementById("registerEmail").value;
             const phone = document.getElementById("registerPhone").value;
-            if (name && email && phone) {
+            const password = document.getElementById("registerPassword").value;
+            if (name && email && phone && password) {
                 alert(`註冊成功！\n姓名: ${name}\n電子郵件: ${email}\n電話號碼: ${phone}`);
                 document.getElementById("registerContent").classList.add("hidden");
                 document.getElementById("mainContent").classList.remove("hidden");
@@ -153,7 +163,21 @@
 
         // 顯示會員登入頁面
         function showLogin() {
-            alert("會員登入功能尚未實現！");
+            document.getElementById("mainContent").classList.add("hidden");
+            document.getElementById("loginContent").classList.remove("hidden");
+        }
+
+        // 提交登入資料
+        function submitLogin() {
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+            if (email && password) {
+                alert(`登入成功！\n電子郵件: ${email}`);
+                document.getElementById("loginContent").classList.add("hidden");
+                document.getElementById("mainContent").classList.remove("hidden");
+            } else {
+                alert("請填寫完整的登入資料！");
+            }
         }
     </script>
 </body>
