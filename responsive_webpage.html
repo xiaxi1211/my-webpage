@@ -1,129 +1,84 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>會員登入與註冊</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('4c4c8d1487cce871a812f905747963ec_896_1152.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            margin: 0;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
-        }
-        .content {
-            max-width: 400px;
-            width: 90%;
-            box-sizing: border-box;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-        h1 {
-            color: #333;
-            font-size: 1.5em;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1em;
-            border-radius: 5px;
-            margin: 10px 5px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .hidden {
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="content" id="mainContent">
-        <h1>歡迎來到會員系統</h1>
-        <p>請選擇以下操作</p>
-        <button onclick="showLogin()">會員登入</button>
-        <button onclick="showRegister()">註冊會員</button>
-    </div>
+<!-- 選擇故事方案 -->
+<div class="options" id="optionsContent">
+    <h1>選擇您的故事方案</h1>
+    <button onclick="showDetails('完整故事')">完整故事</button>
+    <button onclick="showDetails('段落故事')">段落故事</button>
+    <button onclick="goBack()">返回</button>
+</div>
 
-    <div class="content hidden" id="loginContent">
-        <h1>會員登入</h1>
-        <input type="text" id="loginUsername" placeholder="帳號" required>
-        <input type="password" id="loginPassword" placeholder="密碼" required>
-        <button onclick="submitLogin()">登入</button>
-        <button onclick="goBack()">返回</button>
-    </div>
+<!-- 登入頁面 -->
+<div class="login" id="loginContent">
+    <h1>會員登入</h1>
+    <input type="text" id="loginUsername" placeholder="帳號" required>
+    <input type="password" id="loginPassword" placeholder="密碼" required>
+    <button onclick="submitLogin()">登入</button>
+    <button onclick="goBack()">返回</button>
+</div>
 
-    <div class="content hidden" id="registerContent">
-        <h1>註冊會員</h1>
-        <input type="text" id="registerName" placeholder="姓名" required>
-        <input type="email" id="registerEmail" placeholder="電子郵件" required>
-        <input type="tel" id="registerPhone" placeholder="電話號碼" required>
-        <button onclick="submitRegister()">提交</button>
-        <button onclick="goBack()">返回</button>
-    </div>
+<!-- 註冊頁面 -->
+<div class="register" id="registerContent">
+    <h1>註冊會員</h1>
+    <input type="text" id="registerName" placeholder="姓名" required>
+    <input type="email" id="registerEmail" placeholder="電子郵件" required>
+    <input type="tel" id="registerPhone" placeholder="電話號碼" required>
+    <button onclick="submitRegister()">提交</button>
+    <button onclick="goBack()">返回</button>
+</div>
 
-    <script>
-        function showLogin() {
-            document.getElementById("mainContent").classList.add("hidden");
-            document.getElementById("loginContent").classList.remove("hidden");
+<script>
+    // 顯示選擇故事方案
+    function showOptions() {
+        document.getElementById("initialContent").classList.remove("active");
+        document.getElementById("optionsContent").classList.add("active");
+    }
+
+    // 顯示註冊頁面
+    function showRegister() {
+        document.getElementById("initialContent").classList.remove("active");
+        document.getElementById("registerContent").classList.add("active");
+    }
+
+    // 顯示登入頁面
+    function showLogin() {
+        document.getElementById("initialContent").classList.remove("active");
+        document.getElementById("loginContent").classList.add("active");
+    }
+
+    // 返回主頁
+    function goBack() {
+        document.getElementById("optionsContent").classList.remove("active");
+        document.getElementById("registerContent").classList.remove("active");
+        document.getElementById("loginContent").classList.remove("active");
+        document.getElementById("initialContent").classList.add("active");
+    }
+
+    // 提交登入資料
+    function submitLogin() {
+        const username = document.getElementById("loginUsername").value;
+        const password = document.getElementById("loginPassword").value;
+        if (username && password) {
+            alert(`登入成功！\n帳號: ${username}`);
+            goBack(); // 返回主畫面
+        } else {
+            alert("請輸入完整的登入資料！");
         }
+    }
 
-        function showRegister() {
-            document.getElementById("mainContent").classList.add("hidden");
-            document.getElementById("registerContent").classList.remove("hidden");
+    // 提交註冊資料
+    function submitRegister() {
+        const name = document.getElementById("registerName").value;
+        const email = document.getElementById("registerEmail").value;
+        const phone = document.getElementById("registerPhone").value;
+        if (name && email && phone) {
+            alert(`註冊成功！\n姓名: ${name}\n電子郵件: ${email}\n電話號碼: ${phone}`);
+            goBack(); // 返回主畫面
+        } else {
+            alert("請輸入完整的註冊資料！");
         }
+    }
 
-        function goBack() {
-            document.getElementById("loginContent").classList.add("hidden");
-            document.getElementById("registerContent").classList.add("hidden");
-            document.getElementById("mainContent").classList.remove("hidden");
-        }
-
-        function submitLogin() {
-            const username = document.getElementById("loginUsername").value;
-            const password = document.getElementById("loginPassword").value;
-            if (username && password) {
-                alert(`登入成功！\n帳號: ${username}`);
-                goBack(); // 返回主畫面
-            } else {
-                alert("請輸入完整的登入資料！");
-            }
-        }
-
-        function submitRegister() {
-            const name = document.getElementById("registerName").value;
-            const email = document.getElementById("registerEmail").value;
-            const phone = document.getElementById("registerPhone").value;
-            if (name && email && phone) {
-                alert(`註冊成功！\n姓名: ${name}\n電子郵件: ${email}\n電話號碼: ${phone}`);
-                goBack(); // 返回主畫面
-            } else {
-                alert("請輸入完整的註冊資料！");
-            }
-        }
-    </script>
-</body>
-</html>
+    // 顯示故事細節
+    function showDetails(plan) {
+        alert(`您選擇的方案是：${plan}`);
+    }
+</script>
