@@ -46,10 +46,18 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin: 10px 5px;
+            margin-top: 10px;
         }
         button:hover {
             background-color: #0056b3;
+        }
+        input[type="text"], input[type="email"], input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
         .hidden {
             display: none;
@@ -57,37 +65,8 @@
     </style>
 </head>
 <body>
-    <!-- 主畫面 -->
-    <div class="wrapper" id="mainContent">
-        <h1>歡迎來到自傳回憶錄系統</h1>
-        <p>為您打造量身專屬的自傳</p>
-        <button onclick="showOptions()">內容介紹</button>
-        <button onclick="showLogin()">會員登入</button>
-    </div>
-
-    <!-- 選擇故事方案 -->
-    <div class="wrapper hidden" id="optionsContent">
-        <h1>選擇您的故事方案</h1>
-        <button onclick="showDetails('完整故事')">完整故事</button>
-        <button onclick="showDetails('段落故事')">段落故事</button>
-    </div>
-
-    <!-- 完整故事介紹 -->
-    <div class="wrapper hidden" id="fullStoryDetails">
-        <h1>完整故事方案</h1>
-        <p>這個方案包括完整的自傳撰寫服務，涵蓋您人生中的重要經歷和故事。<br>價格：NT$ 3,000</p>
-        <button onclick="selectPlan('完整故事')">選擇此方案</button>
-    </div>
-
-    <!-- 段落故事介紹 -->
-    <div class="wrapper hidden" id="segmentStoryDetails">
-        <h1>段落故事方案</h1>
-        <p>這個方案提供分段的自傳內容，可靈活選擇和組合不同時期的故事。<br>價格：NT$ 1,500</p>
-        <button onclick="selectPlan('段落故事')">選擇此方案</button>
-    </div>
-
     <!-- 註冊頁面 -->
-    <div class="wrapper hidden" id="registerContent">
+    <div class="wrapper" id="registerContent">
         <h1>註冊會員</h1>
         <input type="text" id="registerName" placeholder="姓名" required>
         <input type="email" id="registerEmail" placeholder="電子郵件" required>
@@ -96,30 +75,6 @@
     </div>
 
     <script>
-        // 顯示故事方案選擇頁面
-        function showOptions() {
-            document.getElementById("mainContent").classList.add("hidden");
-            document.getElementById("optionsContent").classList.remove("hidden");
-        }
-
-        // 顯示故事方案詳細介紹
-        function showDetails(option) {
-            document.getElementById("optionsContent").classList.add("hidden");
-            if (option === '完整故事') {
-                document.getElementById("fullStoryDetails").classList.remove("hidden");
-            } else if (option === '段落故事') {
-                document.getElementById("segmentStoryDetails").classList.remove("hidden");
-            }
-        }
-
-        // 選擇方案後跳轉到註冊頁面
-        function selectPlan(plan) {
-            alert(`您選擇的方案是：${plan}`);
-            document.getElementById("fullStoryDetails").classList.add("hidden");
-            document.getElementById("segmentStoryDetails").classList.add("hidden");
-            document.getElementById("registerContent").classList.remove("hidden");
-        }
-
         // 提交註冊資料
         function submitRegister() {
             const name = document.getElementById("registerName").value;
@@ -127,16 +82,9 @@
             const phone = document.getElementById("registerPhone").value;
             if (name && email && phone) {
                 alert(`註冊成功！\n姓名: ${name}\n電子郵件: ${email}\n電話號碼: ${phone}`);
-                document.getElementById("registerContent").classList.add("hidden");
-                document.getElementById("mainContent").classList.remove("hidden");
             } else {
                 alert("請填寫完整的資料！");
             }
-        }
-
-        // 顯示會員登入頁面
-        function showLogin() {
-            alert("會員登入功能尚未實現！");
         }
     </script>
 </body>
