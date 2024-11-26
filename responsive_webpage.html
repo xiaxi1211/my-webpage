@@ -19,45 +19,17 @@
             align-items: flex-start;
             min-height: 100vh;
         }
-        .header-buttons {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            display: flex;
-            gap: 10px;
-        }
-        .header-buttons button {
-            padding: 10px 15px;
-            font-size: 1em;
-            color: white;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .header-buttons button:hover {
-            background-color: #0056b3;
-        }
         .wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-width: 800px;
-        }
-        .card {
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             padding: 20px;
             width: 100%;
-            max-width: 350px;
+            max-width: 400px;
             text-align: center;
         }
         h1 {
-            font-size: 1.5em;
+            font-size: 1.8em;
             color: #333;
             margin-bottom: 10px;
         }
@@ -82,56 +54,76 @@
         .hidden {
             display: none;
         }
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-    <!-- 頁面右上角的註冊和登入按鈕 -->
-    <div class="header-buttons">
-        <button onclick="showRegister()">註冊會員</button>
-        <button onclick="showLogin()">會員登入</button>
+    <!-- 主畫面 -->
+    <div class="wrapper" id="mainContent">
+        <h1>歡迎來到自傳回憶錄系統</h1>
+        <p>為您打造量身專屬的自傳</p>
+        <button onclick="showOptions()">內容介紹</button>
     </div>
 
-    <!-- 主畫面 -->
-    <div class="wrapper">
-        <div class="card" id="fullStoryCard">
+    <!-- 內容介紹區 -->
+    <div class="wrapper hidden" id="optionsContent">
+        <div class="card">
             <h1>完整故事方案</h1>
             <p>這個方案包括完整的自傳撰寫服務，涵蓋您人生中的重要經歷和故事。<br>價格：NT$ 3,000</p>
-            <div class="button-group">
-                <button onclick="goBack()">返回</button>
-                <button onclick="selectPlan('完整故事')">選擇此方案</button>
-            </div>
+            <button onclick="selectPlan('完整故事')">選擇此方案</button>
         </div>
 
-        <div class="card" id="segmentStoryCard">
+        <div class="card">
             <h1>段落故事方案</h1>
             <p>這個方案提供分段的自傳內容，可靈活選擇和組合不同時期的故事。<br>價格：NT$ 1,500</p>
-            <div class="button-group">
-                <button onclick="goBack()">返回</button>
-                <button onclick="selectPlan('段落故事')">選擇此方案</button>
-            </div>
+            <button onclick="selectPlan('段落故事')">選擇此方案</button>
         </div>
+    </div>
+
+    <!-- 註冊頁面 -->
+    <div class="wrapper hidden" id="registerContent">
+        <h1>註冊會員</h1>
+        <input type="text" id="registerName" placeholder="姓名" required>
+        <input type="email" id="registerEmail" placeholder="電子郵件" required>
+        <input type="tel" id="registerPhone" placeholder="電話號碼" required>
+        <button onclick="submitRegister()">提交</button>
     </div>
 
     <script>
-        // 顯示註冊會員
-        function showRegister() {
-            alert("跳轉到註冊會員畫面！");
+        // 顯示內容介紹區
+        function showOptions() {
+            document.getElementById("mainContent").classList.add("hidden");
+            document.getElementById("optionsContent").classList.remove("hidden");
         }
 
-        // 顯示會員登入
-        function showLogin() {
-            alert("跳轉到會員登入畫面！");
-        }
-
-        // 返回主畫面
-        function goBack() {
-            alert("返回到主頁面！");
-        }
-
-        // 選擇方案
+        // 選擇方案後跳轉到註冊頁面
         function selectPlan(plan) {
-            alert(`您已選擇 ${plan}，請註冊會員以繼續！`);
-            showRegister(); // 跳轉到註冊會員畫面
+            alert(`您選擇的方案是：${plan}`);
+            document.getElementById("optionsContent").classList.add("hidden");
+            document.getElementById("registerContent").classList.remove("hidden");
+        }
+
+        // 提交註冊資料
+        function submitRegister() {
+            const name = document.getElementById("registerName").value;
+            const email = document.getElementById("registerEmail").value;
+            const phone = document.getElementById("registerPhone").value;
+            if (name && email && phone) {
+                alert(`註冊成功！\n姓名: ${name}\n電子郵件: ${email}\n電話號碼: ${phone}`);
+                document.getElementById("registerContent").classList.add("hidden");
+                document.getElementById("mainContent").classList.remove("hidden");
+            } else {
+                alert("請填寫完整的資料！");
+            }
         }
     </script>
 </body>
