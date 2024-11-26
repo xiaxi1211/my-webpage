@@ -51,14 +51,6 @@
         button:hover {
             background-color: #0056b3;
         }
-        input[type="text"], input[type="email"], input[type="tel"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
         .hidden {
             display: none;
         }
@@ -73,6 +65,27 @@
         <button onclick="showLogin()">會員登入</button>
     </div>
 
+    <!-- 選擇故事方案 -->
+    <div class="wrapper hidden" id="optionsContent">
+        <h1>選擇您的故事方案</h1>
+        <button onclick="showDetails('完整故事')">完整故事</button>
+        <button onclick="showDetails('段落故事')">段落故事</button>
+    </div>
+
+    <!-- 完整故事介紹 -->
+    <div class="wrapper hidden" id="fullStoryDetails">
+        <h1>完整故事方案</h1>
+        <p>這個方案包括完整的自傳撰寫服務，涵蓋您人生中的重要經歷和故事。<br>價格：NT$ 3,000</p>
+        <button onclick="selectPlan('完整故事')">選擇此方案</button>
+    </div>
+
+    <!-- 段落故事介紹 -->
+    <div class="wrapper hidden" id="segmentStoryDetails">
+        <h1>段落故事方案</h1>
+        <p>這個方案提供分段的自傳內容，可靈活選擇和組合不同時期的故事。<br>價格：NT$ 1,500</p>
+        <button onclick="selectPlan('段落故事')">選擇此方案</button>
+    </div>
+
     <!-- 註冊頁面 -->
     <div class="wrapper hidden" id="registerContent">
         <h1>註冊會員</h1>
@@ -82,38 +95,29 @@
         <button onclick="submitRegister()">提交</button>
     </div>
 
-    <!-- 內容介紹區 -->
-    <div class="wrapper hidden" id="optionsContent">
-        <h1>選擇您的故事方案</h1>
-        <button onclick="selectPlan('完整故事')">完整故事</button>
-        <button onclick="selectPlan('段落故事')">段落故事</button>
-    </div>
-
-    <!-- 會員登入頁面 -->
-    <div class="wrapper hidden" id="loginContent">
-        <h1>會員登入</h1>
-        <input type="text" id="loginUsername" placeholder="帳號" required>
-        <input type="password" id="loginPassword" placeholder="密碼" required>
-        <button onclick="submitLogin()">登入</button>
-    </div>
-
     <script>
-        // 顯示內容介紹
+        // 顯示故事方案選擇頁面
         function showOptions() {
             document.getElementById("mainContent").classList.add("hidden");
             document.getElementById("optionsContent").classList.remove("hidden");
         }
 
-        // 顯示註冊頁面
-        function showRegister() {
-            document.getElementById("mainContent").classList.add("hidden");
-            document.getElementById("registerContent").classList.remove("hidden");
+        // 顯示故事方案詳細介紹
+        function showDetails(option) {
+            document.getElementById("optionsContent").classList.add("hidden");
+            if (option === '完整故事') {
+                document.getElementById("fullStoryDetails").classList.remove("hidden");
+            } else if (option === '段落故事') {
+                document.getElementById("segmentStoryDetails").classList.remove("hidden");
+            }
         }
 
-        // 顯示登入頁面
-        function showLogin() {
-            document.getElementById("mainContent").classList.add("hidden");
-            document.getElementById("loginContent").classList.remove("hidden");
+        // 選擇方案後跳轉到註冊頁面
+        function selectPlan(plan) {
+            alert(`您選擇的方案是：${plan}`);
+            document.getElementById("fullStoryDetails").classList.add("hidden");
+            document.getElementById("segmentStoryDetails").classList.add("hidden");
+            document.getElementById("registerContent").classList.remove("hidden");
         }
 
         // 提交註冊資料
@@ -130,23 +134,9 @@
             }
         }
 
-        // 提交登入資料
-        function submitLogin() {
-            const username = document.getElementById("loginUsername").value;
-            const password = document.getElementById("loginPassword").value;
-            if (username && password) {
-                alert(`登入成功！\n帳號: ${username}`);
-                document.getElementById("loginContent").classList.add("hidden");
-                document.getElementById("mainContent").classList.remove("hidden");
-            } else {
-                alert("請填寫完整的登入資料！");
-            }
-        }
-
-        // 選擇方案
-        function selectPlan(plan) {
-            alert(`您選擇的方案是：${plan}`);
-            showRegister(); // 跳轉到註冊會員畫面
+        // 顯示會員登入頁面
+        function showLogin() {
+            alert("會員登入功能尚未實現！");
         }
     </script>
 </body>
