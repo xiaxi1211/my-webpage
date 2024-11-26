@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>自傳回憶錄系統</title>
+    <title>會員登入與註冊</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,39 +19,20 @@
             align-items: center;
             min-height: 100vh;
             text-align: center;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
         }
-        .content, .options, .details, .question, .personal-info {
-            max-width: 100%;
+        .content {
+            max-width: 400px;
             width: 90%;
             box-sizing: border-box;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 8px;
-            margin: 0 auto 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: none;
-        }
-        .content.active, .options.active, .details.active, .question.active, .personal-info.active {
-            display: block;
+            text-align: center;
         }
         h1 {
             color: #333;
             font-size: 1.5em;
-            word-wrap: break-word;
-        }
-        p {
-            font-size: 1em;
-            color: #666;
-            word-wrap: break-word;
-        }
-        .button-group, .recording-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
         }
         button {
             padding: 10px 20px;
@@ -61,30 +42,12 @@
             cursor: pointer;
             font-size: 1em;
             border-radius: 5px;
+            margin: 10px 5px;
         }
         button:hover {
             background-color: #0056b3;
         }
-        .mic-button {
-            font-size: 1.5em;
-            padding: 15px;
-            background-color: #ff5722;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.2s;
-        }
-        .mic-button.recording {
-            background-color: #d84315;
-            font-size: 1em;
-        }
-        .mic-icon {
-            margin-right: 5px;
-        }
-        input[type="text"], input[type="email"], input[type="tel"], select {
+        input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -92,180 +55,74 @@
             border-radius: 5px;
             box-sizing: border-box;
         }
-        @media (min-width: 768px) {
-            .content, .options, .details, .question, .personal-info {
-                max-width: 600px;
-            }
-            h1 {
-                font-size: 2em;
-            }
-            p {
-                font-size: 1.2em;
-            }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="content active" id="initialContent">
-        <h1>歡迎來到自傳回憶錄系統</h1>
-        <p>為您打造量身專屬的自傳</p>
-        <button onclick="showOptions()">開始打造</button>
-    </div>
-    
-    <div class="options" id="optionsContent">
-        <h1>選擇您的故事方案</h1>
-        <button onclick="showDetails('完整故事')">完整故事</button>
-        <button onclick="showDetails('段落故事')">段落故事</button>
-    </div>
-    
-    <div class="details" id="fullStoryDetails">
-        <h1>完整故事方案</h1>
-        <p>這個方案包括完整的自傳撰寫服務，涵蓋您人生中的重要經歷和故事。<br>價格：NT$ 3,000</p>
-        <div class="button-group">
-            <button onclick="goBack()">返回選擇</button>
-            <button onclick="selectPlan()">選擇此方案</button>
-        </div>
-    </div>
-    
-    <div class="details" id="segmentStoryDetails">
-        <h1>段落故事方案</h1>
-        <p>這個方案提供分段的自傳內容，可靈活選擇和組合不同時期的故事。<br>價格：NT$ 1,500</p>
-        <div class="button-group">
-            <button onclick="goBack()">返回選擇</button>
-            <button onclick="selectPlan()">選擇此方案</button>
-        </div>
+    <div class="content" id="mainContent">
+        <h1>歡迎來到會員系統</h1>
+        <p>請選擇以下操作</p>
+        <button onclick="showLogin()">會員登入</button>
+        <button onclick="showRegister()">註冊會員</button>
     </div>
 
-    <!-- 問題區塊 -->
-    <div class="question" id="questionSection">
-        <h1>請回答以下問題</h1>
-        <p id="questionText">您有什麼特別的童年回憶嗎？</p>
-        <div class="mic-button" id="micButton" onclick="startRecording()">
-            <span class="mic-icon">🎤</span>按下開始錄音
-        </div>
-        <div class="recording-buttons" id="recordingControls" style="display: none;">
-            <button onclick="resetRecording()">重新</button>
-            <button onclick="sendRecording()">發送</button>
-        </div>
+    <div class="content hidden" id="loginContent">
+        <h1>會員登入</h1>
+        <input type="text" id="loginUsername" placeholder="帳號" required>
+        <input type="password" id="loginPassword" placeholder="密碼" required>
+        <button onclick="submitLogin()">登入</button>
+        <button onclick="goBack()">返回</button>
     </div>
 
-    <!-- 個人資料填寫區塊 -->
-    <div class="personal-info" id="personalInfoSection">
-        <h1>填寫個人資料</h1>
-        <form id="personalInfoForm">
-            <input type="text" id="name" name="name" placeholder="姓名" required>
-            <input type="email" id="email" name="email" placeholder="電子郵件" required>
-            <input type="tel" id="phone" name="phone" placeholder="電話號碼" required>
-            <label for="style">選擇自傳風格：</label>
-            <select id="style" name="style" required>
-                <option value="">請選擇風格</option>
-                <option value="經典">經典風格</option>
-                <option value="溫馨">溫馨風格</option>
-                <option value="幽默">幽默風格</option>
-                <option value="勵志">勵志風格</option>
-                <option value="文學">文學風格</option>
-            </select>
-            <button type="button" onclick="submitPersonalInfo()">提交</button>
-        </form>
+    <div class="content hidden" id="registerContent">
+        <h1>註冊會員</h1>
+        <input type="text" id="registerName" placeholder="姓名" required>
+        <input type="email" id="registerEmail" placeholder="電子郵件" required>
+        <input type="tel" id="registerPhone" placeholder="電話號碼" required>
+        <button onclick="submitRegister()">提交</button>
+        <button onclick="goBack()">返回</button>
     </div>
 
     <script>
-        const questions = [
-            "您有什麼特別的童年回憶嗎？",
-            "您最喜歡的學校記憶是什麼？",
-            "您人生中遇到的最大挑戰是什麼？"
-        ];
-        let currentQuestionIndex = 0;
-        const micButton = document.getElementById("micButton");
-
-        function showOptions() {
-            document.getElementById('initialContent').classList.remove('active');
-            document.getElementById('optionsContent').classList.add('active');
+        function showLogin() {
+            document.getElementById("mainContent").classList.add("hidden");
+            document.getElementById("loginContent").classList.remove("hidden");
         }
 
-        function showDetails(plan) {
-            document.getElementById('optionsContent').classList.remove('active');
-            
-            if (plan === '完整故事') {
-                document.getElementById('fullStoryDetails').classList.add('active');
-            } else if (plan === '段落故事') {
-                document.getElementById('segmentStoryDetails').classList.add('active');
-            }
+        function showRegister() {
+            document.getElementById("mainContent").classList.add("hidden");
+            document.getElementById("registerContent").classList.remove("hidden");
         }
 
         function goBack() {
-            document.getElementById('fullStoryDetails').classList.remove('active');
-            document.getElementById('segmentStoryDetails').classList.remove('active');
-            document.getElementById('optionsContent').classList.add('active');
+            document.getElementById("loginContent").classList.add("hidden");
+            document.getElementById("registerContent").classList.add("hidden");
+            document.getElementById("mainContent").classList.remove("hidden");
         }
 
-        function selectPlan() {
-            document.getElementById('fullStoryDetails').classList.remove('active');
-            document.getElementById('segmentStoryDetails').classList.remove('active');
-            document.getElementById('questionSection').classList.add('active');
-            loadQuestion();
-        }
-
-        function loadQuestion() {
-            document.getElementById("questionText").innerText = questions[currentQuestionIndex];
-        }
-
-        function startRecording() {
-            micButton.classList.add("recording");
-            micButton.innerHTML = '<span class="mic-icon">🎤</span>正在錄音...按完成以結束'; // 顯示錄音中文字
-            console.log("開始錄音...");
-            
-            // 顯示完成按鈕，隱藏重新與發送按鈕
-            const finishButton = document.createElement("button");
-            finishButton.innerText = "完成";
-            finishButton.onclick = completeRecording;
-            document.getElementById("recordingControls").innerHTML = ""; // 清空其他按鈕
-            document.getElementById("recordingControls").appendChild(finishButton);
-            document.getElementById("recordingControls").style.display = "flex";
-        }
-
-        function completeRecording() {
-            micButton.innerHTML = '<span class="mic-icon">🎤</span>已完成錄音'; // 更改按鈕文字為已完成錄音
-            micButton.classList.remove("recording");
-            micButton.onclick = null; // 禁用按鈕點擊事件
-
-            // 顯示重新和發送按鈕
-            document.getElementById("recordingControls").innerHTML = `
-                <button onclick="resetRecording()">重新</button>
-                <button onclick="sendRecording()">發送</button>
-            `;
-            console.log("錄音完成...");
-        }
-
-        function resetRecording() {
-            micButton.innerHTML = '<span class="mic-icon">🎤</span>按下開始錄音'; // 恢復按鈕原本文字
-            micButton.onclick = startRecording; // 重新啟用錄音按鈕點擊事件
-            document.getElementById("recordingControls").style.display = "none";
-            console.log("重新錄音...");
-        }
-
-        function sendRecording() {
-            resetRecording(); // 重置錄音按鈕狀態
-            nextQuestion(); // 跳到下一題
-        }
-
-        function nextQuestion() {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                loadQuestion();
+        function submitLogin() {
+            const username = document.getElementById("loginUsername").value;
+            const password = document.getElementById("loginPassword").value;
+            if (username && password) {
+                alert(`登入成功！\n帳號: ${username}`);
+                goBack(); // 返回主畫面
             } else {
-                document.getElementById("questionSection").classList.remove("active");
-                document.getElementById("personalInfoSection").classList.add("active");
+                alert("請輸入完整的登入資料！");
             }
         }
 
-        function submitPersonalInfo() {
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const phone = document.getElementById("phone").value;
-            const style = document.getElementById("style").value;
-            alert(`個人資料提交成功！\n姓名: ${name}\n電子郵件: ${email}\n電話號碼: ${phone}\n自傳風格: ${style}`);
-            document.getElementById("personalInfoSection").classList.remove("active");
+        function submitRegister() {
+            const name = document.getElementById("registerName").value;
+            const email = document.getElementById("registerEmail").value;
+            const phone = document.getElementById("registerPhone").value;
+            if (name && email && phone) {
+                alert(`註冊成功！\n姓名: ${name}\n電子郵件: ${email}\n電話號碼: ${phone}`);
+                goBack(); // 返回主畫面
+            } else {
+                alert("請輸入完整的註冊資料！");
+            }
         }
     </script>
 </body>
