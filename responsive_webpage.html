@@ -1,84 +1,162 @@
-<!-- 選擇故事方案 -->
-<div class="options" id="optionsContent">
-    <h1>選擇您的故事方案</h1>
-    <button onclick="showDetails('完整故事')">完整故事</button>
-    <button onclick="showDetails('段落故事')">段落故事</button>
-    <button onclick="goBack()">返回</button>
-</div>
-
-<!-- 登入頁面 -->
-<div class="login" id="loginContent">
-    <h1>會員登入</h1>
-    <input type="text" id="loginUsername" placeholder="帳號" required>
-    <input type="password" id="loginPassword" placeholder="密碼" required>
-    <button onclick="submitLogin()">登入</button>
-    <button onclick="goBack()">返回</button>
-</div>
-
-<!-- 註冊頁面 -->
-<div class="register" id="registerContent">
-    <h1>註冊會員</h1>
-    <input type="text" id="registerName" placeholder="姓名" required>
-    <input type="email" id="registerEmail" placeholder="電子郵件" required>
-    <input type="tel" id="registerPhone" placeholder="電話號碼" required>
-    <button onclick="submitRegister()">提交</button>
-    <button onclick="goBack()">返回</button>
-</div>
-
-<script>
-    // 顯示選擇故事方案
-    function showOptions() {
-        document.getElementById("initialContent").classList.remove("active");
-        document.getElementById("optionsContent").classList.add("active");
-    }
-
-    // 顯示註冊頁面
-    function showRegister() {
-        document.getElementById("initialContent").classList.remove("active");
-        document.getElementById("registerContent").classList.add("active");
-    }
-
-    // 顯示登入頁面
-    function showLogin() {
-        document.getElementById("initialContent").classList.remove("active");
-        document.getElementById("loginContent").classList.add("active");
-    }
-
-    // 返回主頁
-    function goBack() {
-        document.getElementById("optionsContent").classList.remove("active");
-        document.getElementById("registerContent").classList.remove("active");
-        document.getElementById("loginContent").classList.remove("active");
-        document.getElementById("initialContent").classList.add("active");
-    }
-
-    // 提交登入資料
-    function submitLogin() {
-        const username = document.getElementById("loginUsername").value;
-        const password = document.getElementById("loginPassword").value;
-        if (username && password) {
-            alert(`登入成功！\n帳號: ${username}`);
-            goBack(); // 返回主畫面
-        } else {
-            alert("請輸入完整的登入資料！");
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自傳回憶錄系統</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('4c4c8d1487cce871a812f905747963ec_896_1152.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 0 20px;
+            text-align: center;
         }
-    }
-
-    // 提交註冊資料
-    function submitRegister() {
-        const name = document.getElementById("registerName").value;
-        const email = document.getElementById("registerEmail").value;
-        const phone = document.getElementById("registerPhone").value;
-        if (name && email && phone) {
-            alert(`註冊成功！\n姓名: ${name}\n電子郵件: ${email}\n電話號碼: ${phone}`);
-            goBack(); // 返回主畫面
-        } else {
-            alert("請輸入完整的註冊資料！");
+        .wrapper {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
         }
-    }
+        h1 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 主畫面 -->
+    <div class="wrapper" id="mainContent">
+        <h1>歡迎來到自傳回憶錄系統</h1>
+        <p>為您打造量身專屬的自傳</p>
+        <button onclick="showOptions()">開始打造</button>
+        <button onclick="showRegister()">註冊會員</button>
+        <button onclick="showLogin()">會員登入</button>
+    </div>
 
-    // 顯示故事細節
-    function showDetails(plan) {
-        alert(`您選擇的方案是：${plan}`);
-    }
-</script>
+    <!-- 選擇故事方案 -->
+    <div class="wrapper hidden" id="optionsContent">
+        <h1>選擇您的故事方案</h1>
+        <button onclick="showDetails('完整故事')">完整故事</button>
+        <button onclick="showDetails('段落故事')">段落故事</button>
+        <button onclick="goBack()">返回</button>
+    </div>
+
+    <!-- 登入頁面 -->
+    <div class="wrapper hidden" id="loginContent">
+        <h1>會員登入</h1>
+        <input type="text" id="loginUsername" placeholder="帳號" required>
+        <input type="password" id="loginPassword" placeholder="密碼" required>
+        <button onclick="submitLogin()">登入</button>
+        <button onclick="goBack()">返回</button>
+    </div>
+
+    <!-- 註冊頁面 -->
+    <div class="wrapper hidden" id="registerContent">
+        <h1>註冊會員</h1>
+        <input type="text" id="registerName" placeholder="姓名" required>
+        <input type="email" id="registerEmail" placeholder="電子郵件" required>
+        <input type="tel" id="registerPhone" placeholder="電話號碼" required>
+        <button onclick="submitRegister()">提交</button>
+        <button onclick="goBack()">返回</button>
+    </div>
+
+    <script>
+        // 顯示故事方案選擇
+        function showOptions() {
+            document.getElementById("mainContent").classList.add("hidden");
+            document.getElementById("optionsContent").classList.remove("hidden");
+        }
+
+        // 顯示註冊會員表單
+        function showRegister() {
+            document.getElementById("mainContent").classList.add("hidden");
+            document.getElementById("registerContent").classList.remove("hidden");
+        }
+
+        // 顯示會員登入表單
+        function showLogin() {
+            document.getElementById("mainContent").classList.add("hidden");
+            document.getElementById("loginContent").classList.remove("hidden");
+        }
+
+        // 返回主頁
+        function goBack() {
+            document.getElementById("optionsContent").classList.add("hidden");
+            document.getElementById("registerContent").classList.add("hidden");
+            document.getElementById("loginContent").classList.add("hidden");
+            document.getElementById("mainContent").classList.remove("hidden");
+        }
+
+        // 提交登入資料
+        function submitLogin() {
+            const username = document.getElementById("loginUsername").value;
+            const password = document.getElementById("loginPassword").value;
+            if (username && password) {
+                alert(`登入成功！\n帳號: ${username}`);
+                goBack(); // 返回主畫面
+            } else {
+                alert("請輸入完整的登入資料！");
+            }
+        }
+
+        // 提交註冊資料
+        function submitRegister() {
+            const name = document.getElementById("registerName").value;
+            const email = document.getElementById("registerEmail").value;
+            const phone = document.getElementById("registerPhone").value;
+            if (name && email && phone) {
+                alert(`註冊成功！\n姓名: ${name}\n電子郵件: ${email}\n電話號碼: ${phone}`);
+                goBack(); // 返回主畫面
+            } else {
+                alert("請輸入完整的註冊資料！");
+            }
+        }
+
+        // 顯示故事細節
+        function showDetails(plan) {
+            alert(`您選擇的方案是：${plan}`);
+        }
+    </script>
+</body>
+</html>
