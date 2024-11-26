@@ -59,6 +59,22 @@
             border-radius: 5px;
             box-sizing: border-box;
         }
+        .progress-bar {
+            width: 100%;
+            background-color: #f3f3f3;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progress-bar-fill {
+            width: 0%;
+            height: 20px;
+            background-color: #007bff;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            transition: width 0.5s ease;
+        }
         .hidden {
             display: none;
         }
@@ -75,7 +91,7 @@
 
     <!-- 選擇故事方案 -->
     <div class="wrapper hidden" id="optionsContent">
-        <h1>選擇您想了解的故事方案</h1>
+        <h1>選擇您的故事方案</h1>
         <button onclick="showDetails('完整故事')">完整故事</button>
         <button onclick="showDetails('段落故事')">段落故事</button>
     </div>
@@ -114,7 +130,19 @@
         <button onclick="submitLogin()">登入</button>
     </div>
 
+    <!-- 會員專區 -->
+    <div class="wrapper hidden" id="memberArea">
+        <h1>會員專區</h1>
+        <p>您選擇的方案是：<span id="selectedPlan">未選擇</span></p>
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="progressFill">0%</div>
+        </div>
+        <button onclick="updateProgress()">更新進度</button>
+    </div>
+
     <script>
+        let selectedPlan = "";
+
         // 顯示故事方案選擇頁面
         function showOptions() {
             document.getElementById("mainContent").classList.add("hidden");
@@ -140,7 +168,7 @@
 
         // 選擇方案後跳轉到註冊頁面
         function selectPlan(plan) {
-            alert(`您選擇的方案是：${plan}`);
+            selectedPlan = plan;
             document.getElementById("fullStoryDetails").classList.add("hidden");
             document.getElementById("segmentStoryDetails").classList.add("hidden");
             document.getElementById("registerContent").classList.remove("hidden");
@@ -155,7 +183,7 @@
             if (name && email && phone && password) {
                 alert(`註冊成功！\n姓名: ${name}\n電子郵件: ${email}\n電話號碼: ${phone}`);
                 document.getElementById("registerContent").classList.add("hidden");
-                document.getElementById("mainContent").classList.remove("hidden");
+                showMemberArea();
             } else {
                 alert("請填寫完整的資料！");
             }
@@ -174,9 +202,26 @@
             if (email && password) {
                 alert(`登入成功！\n電子郵件: ${email}`);
                 document.getElementById("loginContent").classList.add("hidden");
-                document.getElementById("mainContent").classList.remove("hidden");
+                showMemberArea();
             } else {
                 alert("請填寫完整的登入資料！");
+            }
+        }
+
+        // 顯示會員專區
+        function showMemberArea() {
+            document.getElementById("memberArea").classList.remove("hidden");
+            document.getElementById("selectedPlan").innerText = selectedPlan || "未選擇";
+        }
+
+        // 更新進度條
+        function updateProgress() {
+            const progressFill = document.getElementById("progressFill");
+            let currentWidth = parseInt(progressFill.style.width);
+            if (currentWidth < 100) {
+                currentWidth += 20;
+                progressFill.style.width = `${currentWidth}%`;
+                progressFill.innerText = `${currentWidth}%`;
             }
         }
     </script>
